@@ -1,4 +1,2 @@
-ERROR: file codeforces.id is absent
-ERROR: invalid file name 0011A
-ERROR: invalid file name 1717B
-ERROR: invalid file name 1721B
+OK: file codeforces.id is correct
+OK: folder prj.codeforces structure is correct

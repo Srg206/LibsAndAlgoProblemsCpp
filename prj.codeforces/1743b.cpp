@@ -11,7 +11,7 @@ public:
 		height = h;
 		steps.resize(height);
 		for (int i = 0; i < height; i++) {
-			steps[i].resize(i);
+			steps[i].resize(i+1);
 		}
 	}
 	int operator()(int i, int j) {
@@ -19,7 +19,7 @@ public:
 
 	}
 	void operator()(int i, int j, int val) {
-		steps[i][j]=val;
+		steps[i][j] = val;
 
 	}
 	int geth() {
@@ -42,21 +42,22 @@ int main()
 		int len = 0;
 		std::cin >> len;
 		pyramid py(len);
+
 		for (int i = 0; i < len; i++) {
 			py(i, 0, 1);
-			py(i, i-1,0);
+			py(i, i, 1);
 
 		}
-		
+
 		results.push_back(py);
-		
+
 	}
 
 
 	for (int i = 0; i < amount_of_data; i++) {
-		for (int k = 0; k <results[i].geth(); k++) {
-			for (int j = 0; j < k; j++) {
-				std::cout << results[i](k, j);
+		for (int k = 0; k < results[i].geth(); k++) {
+			for (int j = 0; j <=k; j++) {
+				std::cout << results[i](k, j)<< ' ';
 			}
 			std::cout << '\n';
 		}

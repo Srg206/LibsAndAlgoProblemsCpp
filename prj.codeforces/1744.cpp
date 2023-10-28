@@ -33,15 +33,19 @@ int main()
 		int maximum_distance = -1;
 		int counter = 0;
 
-		for (int j = 0; j < len; j++) {
-			if (str2[j] == c) {
-				for (int k = j; str2[k] != 'g'; k++) {
-					counter++;
-				}
-				maximum_distance = max(maximum_distance, counter);
-				counter = 0;
+		int index_c = -1;
+		int index_g = -1;
+		bool is_open = false;
+		for (int j = 0; j < str2.size(); j++) {
+			if (str2[j] == c && !is_open) {
+				index_c = j;
+				is_open = true;
 			}
+			if (str2[j] == 'g' && is_open) {
+				maximum_distance = max(maximum_distance, j - index_c);
+				is_open = false;
 
+			}
 		}
 
 		results.push_back(maximum_distance);

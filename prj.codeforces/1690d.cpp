@@ -26,26 +26,33 @@ int main()
 		std::cin >> len >> sub_len;
 		std::string str;
 		std::cin >> str;
-		std::vector<int> gaps;
-		int min_counter = 1000000000;
-		for (int j = 0; j <= len - sub_len; j++) {
-			int counter = 0;
-			for (int k = j; k < j + sub_len; k++) {
-				if (str[k] == 'W') {
-					counter++;
+		int counter_B = 0;
+		int max_counter = -1000000000;
+		for (int j = 0; j < sub_len; j++) {
+			if (str[j] == 'B') {
+				counter_B++;
+			}
+		}
+		max_counter = counter_B;
+		for (int j = 0; j <= len - sub_len; j++){
+			if (str[j] == str[j+sub_len]) {
+				
+			}
+			else {
+				if (str[j] == 'W' && str[j + sub_len] == 'B') {
+					counter_B++;
+					max_counter = max(counter_B, max_counter);
+				}
+				if (str[j] == 'B' && str[j + sub_len] == 'W') {
+					counter_B--;
+					max_counter = max(counter_B, max_counter);
 				}
 			}
-			//gaps.push_back(counter);
-			min_counter = min(counter, min_counter);
 		}
-		/*int minimum = 100000000;
-		for (int j : gaps) {
-			if (j < minimum) {
-				minimum = j;
-			}
-		}*/
-		results.push_back(min_counter);
-
+		if (sub_len < max_counter) {
+			max_counter = sub_len;
+		}
+		results.push_back(sub_len-max_counter);
 	}
 
 	for (int i = 0; i < amount_of_data; i++) {

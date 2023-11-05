@@ -5,3 +5,5 @@ project(misis2023f-23-18-tsukanov-s-u)
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(prj.codeforces)
+
+add_subdirectory(prj.lab)

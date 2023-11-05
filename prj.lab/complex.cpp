@@ -13,11 +13,11 @@ public:
 
 	double real=0.0;
 	double imaginary=0.0;
-	const Complex& operator=(const Complex& rhs) { real = rhs.real; imaginary = rhs.imaginary; return *this; };
-	Complex operator+=(Complex& rhs);
-	Complex operator-=(Complex& rhs);
-	Complex operator*=(Complex& rhs);
-	Complex operator/=(Complex& rhs);
+	const Complex operator=(const Complex& rhs) { real = rhs.real; imaginary = rhs.imaginary; return *this; };
+	Complex& operator+=(const Complex& rhs);
+	Complex& operator-=(const Complex& rhs);
+	Complex& operator*=(const Complex& rhs);
+	Complex& operator/=(const Complex& rhs);
 
 	Complex operator+=(double rhs) { Complex a = Complex(rhs); return operator+=(a); };
 	Complex operator-=(double rhs) { Complex a = Complex(rhs); return operator-=(a); };
@@ -31,14 +31,14 @@ public:
 	void print();
 };	
 
-	Complex operator+(Complex& lhs, Complex& rhs);
-	Complex operator-(Complex& lhs, Complex& rhs);
-	Complex operator*(Complex& lhs, Complex& rhs);
-	Complex operator/(Complex& lhs, Complex& rhs);
-	Complex operator+(Complex& lhs, double rhs) { Complex a = Complex(rhs); return (lhs+a); };
-	Complex operator-(Complex& lhs, double rhs) { Complex a = Complex(rhs); return (lhs-a); };
-	Complex operator*(Complex& lhs, double rhs) { Complex a = Complex(rhs); return (lhs*a); };
-	Complex operator/(Complex& lhs, double rhs) { Complex a = Complex(rhs); return (lhs/a); };
+	Complex operator+(const Complex& lhs,const Complex& rhs);
+	Complex operator-(const Complex& lhs,const Complex& rhs);
+	Complex operator*(const Complex& lhs,const Complex& rhs);
+	Complex operator/(const Complex& lhs,const Complex& rhs);
+	Complex operator+(const Complex& lhs,const double rhs) { Complex a = Complex(rhs); return (lhs+a); };
+	Complex operator-(const Complex& lhs,const double rhs) { Complex a = Complex(rhs); return (lhs-a); };
+	Complex operator*(const Complex& lhs,const double rhs) { Complex a = Complex(rhs); return (lhs*a); };
+	Complex operator/(const Complex& lhs,const double rhs) { Complex a = Complex(rhs); return (lhs/a); };
 
 	bool operator==(Complex& lhs, Complex& rhs) { return (lhs.real == rhs.real && lhs.imaginary == rhs.imaginary); };
 	bool operator!=(Complex& lhs, Complex& rhs) { return !(lhs==rhs); };
@@ -47,29 +47,36 @@ public:
 
 	//=======================================================MAIN///////////////////////////////////////////////////////////
 int main() {
-	Complex a(2, 2);
-	Complex b(2, 0);
+	Complex a(1, 2);
+	Complex b(2, 5);
+	Complex c(1, 1);
+	Complex d(0,0);
+	Complex q(0,0);
 	
+	q = a/c/b;
+	q.print();
+
+
 	return 0;
 }
 	//=======================================================MAIN///////////////////////////////////////////////////////////
 
 
-Complex Complex::operator+=(Complex& rhs) {
+Complex &Complex::operator+=(const Complex& rhs) {
 	real += rhs.real;
 	imaginary += rhs.imaginary;
 	return *this;
 }
 
 
-Complex Complex::operator-=(Complex& rhs) {
+Complex &Complex::operator-=(const Complex& rhs) {
 	real -= rhs.real;
 	imaginary -= rhs.imaginary;
 	return *this;
 }
 
 
-Complex Complex::operator*=(Complex& rhs) {
+Complex &Complex::operator*=(const Complex& rhs) {
 	double re = real;
 	double img =imaginary;
 	real = (re * rhs.real) - (img * rhs.imaginary);
@@ -78,7 +85,7 @@ Complex Complex::operator*=(Complex& rhs) {
 }
 
 
-Complex Complex::operator/=(Complex& rhs) {
+Complex &Complex::operator/=(const Complex& rhs) {
 	double del = rhs.real*rhs.real+rhs.imaginary*rhs.imaginary;
 	Complex tmp1(real,imaginary);
 	Complex tmp2(rhs.real, -rhs.imaginary);
@@ -89,24 +96,24 @@ Complex Complex::operator/=(Complex& rhs) {
 }
 
 //=============================================WITHOUT_ASSIGMENT==========////////////////////////////////////////
-Complex operator+(Complex& lhs, Complex& rhs) {
+Complex operator+(const Complex& lhs, const Complex& rhs) {
 	Complex res(lhs.real+rhs.real,lhs.imaginary+rhs.imaginary);
 	return res;
 
 }
-Complex operator-(Complex& lhs, Complex& rhs) {
+Complex operator-(const Complex& lhs, const Complex& rhs) {
 	Complex res(lhs.real - rhs.real, lhs.imaginary - rhs.imaginary);
 	return res;
 
 }
 
-Complex operator*(Complex& lhs, Complex& rhs) {
+Complex operator*(const Complex& lhs, const Complex& rhs) {
 	Complex tmp(lhs);
 	tmp *= rhs;
 	return tmp;
 
 }
-Complex operator/(Complex& lhs, Complex& rhs) {
+Complex operator/(const Complex& lhs,const Complex& rhs) {
 	Complex tmp(lhs);
 	tmp /= rhs;
 	return tmp;

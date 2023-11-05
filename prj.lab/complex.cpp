@@ -1,6 +1,7 @@
 #include<iostream>
 #include<cmath>
 #include <sstream>
+#include <string>
 
 class Complex {
 
@@ -13,6 +14,12 @@ public:
 
 	double real=0.0;
 	double imaginary=0.0;
+
+	static const char Start_Symbol = '{';
+	static const char Middle_Division = ';';
+	static const char Complex_Symbol = 'i';
+	static const char Finish_Symbol = '}';
+
 	const Complex operator=(const Complex& rhs) { real = rhs.real; imaginary = rhs.imaginary; return *this; };
 	Complex& operator+=(const Complex& rhs);
 	Complex& operator-=(const Complex& rhs);
@@ -40,9 +47,10 @@ public:
 	Complex operator*(const Complex& lhs,const double rhs) { Complex a = Complex(rhs); return (lhs*a); };
 	Complex operator/(const Complex& lhs,const double rhs) { Complex a = Complex(rhs); return (lhs/a); };
 
-	bool operator==(Complex& lhs, Complex& rhs) { return (lhs.real == rhs.real && lhs.imaginary == rhs.imaginary); };
-	bool operator!=(Complex& lhs, Complex& rhs) { return !(lhs==rhs); };
-
+	bool operator==(const Complex& lhs, const Complex& rhs) { return (lhs.real == rhs.real && lhs.imaginary == rhs.imaginary); };
+	bool operator!=(const Complex& lhs, const Complex& rhs) { return !(lhs==rhs); };
+	std::ostream& operator<<(std::ostream& out,const Complex& z);
+	std::istream& operator>>(std::istream& in, Complex& z);
 
 
 	//=======================================================MAIN///////////////////////////////////////////////////////////
@@ -52,9 +60,8 @@ int main() {
 	Complex c(1, 1);
 	Complex d(0,0);
 	Complex q(0,0);
-	
-	q = a/c/b;
-	q.print();
+	std::cin >> q;
+	std::cout << q;
 
 
 	return 0;
@@ -119,19 +126,50 @@ Complex operator/(const Complex& lhs,const Complex& rhs) {
 	return tmp;
 
 }
+std::ostream& operator<<(std::ostream &out, const Complex& z) {
+	std::ios_base::fmtflags oldflags = std::cout.flags();
+	std::streamsize oldprecision = std::cout.precision();
+	std::cout.setf(std::ios::fixed, std::ios::floatfield);
+	std::cout.precision(3);
+
+	std::cout << "{" << z.real << ";" << z.imaginary << "i" << "}" << std::endl;
+	
+	std::cout.flags(oldflags);
+	std::cout.precision(oldprecision);
+
+
+	return out;
+}
+std::istream& operator>>(std::istream &in, Complex& z) {
+	std::string str=" ";
+	char left_bar(0);
+	char semicolon(0);
+	char letter_i(0);
+	char right_bar(0);
+	double re = 0;
+	double im = 0;
+	in >> left_bar >> re >> semicolon >> im >> letter_i >> right_bar;
+	if (left_bar == z.Start_Symbol && semicolon == z.Middle_Division && letter_i == z.Complex_Symbol && right_bar == z.Finish_Symbol) {
+		z.real = re;
+		z.imaginary = im;
+	}
+	else{
+		z.real = 0;
+		z.imaginary = 0;
+	}
+
+	return in;
+}
 
 
 void Complex::print() {
 	std::ios_base::fmtflags oldflags = std::cout.flags();
 	std::streamsize oldprecision = std::cout.precision();
 	std::cout.setf(std::ios::fixed, std::ios::floatfield);
-	std::cout.precision(3);
-	if (imaginary > 0) {
-		std::cout << "{" << real << " +" << imaginary << "i" << "}" << std::endl;
-	}
-	else {
-		std::cout << "{" << real <<  " " << imaginary << "i" << "}" << std::endl;
-	}
+	std::cout.precision(3); 
+
+	std::cout << "{" << real << ";" << imaginary << "i" << "}" << std::endl;
+
 	std::cout.flags(oldflags);
 	std::cout.precision(oldprecision);
 

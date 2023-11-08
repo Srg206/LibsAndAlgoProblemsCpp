@@ -5,10 +5,10 @@
 
 struct Complex {
 
-	Complex()=default;
+	Complex() = default;
 	Complex(double re, double img);
 	Complex(double re);
-	~Complex()=default;
+	~Complex() = default;
 
 	double real{ 0 };
 	double imaginary{ 0.0 };
@@ -44,31 +44,109 @@ bool operator==(const Complex& lhs, const Complex& rhs);
 bool operator!=(const Complex& lhs, const Complex& rhs);
 std::ostream& operator<<(std::ostream& out, const Complex& z);
 std::istream& operator>>(std::istream& in, Complex& z);
+
+//=======================================================TEST///////////////////////////////////////////////////////////
+
+void test() {
+	Complex a(1, 2);
+	Complex zero(0, 0);
+	Complex b(2, 3);
+	Complex c(4, 5);
+	double d = 2;
+	//======================Without assigment operations START///
+	std::cout << "a " << a << " + " << " b" << b << " = " << a + b << std::endl;
+	std::cout << "a " << a << " - " << " b" << b << " = " << a - b <<std::endl;
+	std::cout << "a " << a << " * " << " b" << b << " = " << a * b <<std::endl;
+	std::cout << "a " << a << " / " << " b" << b;
+	try {
+			std::cout<< " = " << a / b << std::endl;
+	}
+	catch (const std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+	std::cout << "a " << a << " / " << " b" << zero;
+	try {
+			std::cout<<" = " << a / zero << std::endl;
+	}
+	catch (const std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+	std::cout << "a " << a << " / " << 0;
+	try {
+		std::cout<<" = " << a / 0 << std::endl;
+	}
+	catch (const std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+	//======================Without assigment operations FINISH///
+
+	//======================Assigment operations START///
+	std::cout << "a " << a << " += " << " b" << b << " => " << " a= ";
+	a += b;
+	std::cout << a << std::endl;
+
+	std::cout << "a " << a << " -= " << " b" << b << " => " << " a= ";
+	a -= b;
+	std::cout << a << std::endl;
+
+	std::cout << "a " << a << " *= " << " b" << b << " => " << " a= ";
+	a *= b;
+	std::cout << a << std::endl;
+
+	
+	std::cout << "a " << a << " /= " << " b" <<b;
+	try {
+		a /= b;
+		std::cout<< " => " << " a= "<< a <<std::endl;
+	}
+	catch (const std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+
+	std::cout << "a " << a << " /= " << " zero" <<zero;
+	try {
+		a /= zero;
+		std::cout<< " => " << " a= "<< a <<std::endl;
+	}
+	catch (const std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+
+
+
+
+
+
+
+
+
+	//std::cout << a << " / " << d << " = " << a / d << std::endl;
+
+	//======================Assigment operations FINISH///
+
+}
+//=======================================================TEST///////////////////////////////////////////////////////////
+
 //=======================================================MAIN///////////////////////////////////////////////////////////
 int main() {
-	Complex a(1, 2);
-	Complex b(2, 5);
-	Complex c(1, 1);
-	Complex d(0, 0);
-	Complex q(1, 0);
 
-	d = q + 5;
-	std::cout << d;
-	d = 5+q;
-	std::cout << d;
-
-
-
+	test();
 
 	return 0;
 }
+
 //=======================================================MAIN///////////////////////////////////////////////////////////
+
 Complex::Complex(double re, double img) {
-	real = re; 
+	real = re;
 	imaginary = img;
 }
 Complex::Complex(double re) {
-	real = re; 
+	real = re;
 	imaginary = 0;
 }
 
@@ -79,9 +157,9 @@ Complex& Complex::operator+=(const Complex& rhs) {
 	return *this;
 }
 
-Complex& Complex::operator+=(double rhs) { 
-	Complex a = Complex(rhs); 
-	return operator+=(a); 
+Complex& Complex::operator+=(double rhs) {
+	Complex a = Complex(rhs);
+	return operator+=(a);
 }
 
 
@@ -112,6 +190,9 @@ Complex& Complex::operator*=(double rhs) {
 
 Complex& Complex::operator/=(const Complex& rhs) {
 	double del = rhs.real * rhs.real + rhs.imaginary * rhs.imaginary;
+	if (del == 0) {
+		throw std::exception("   ERORR DIVISON BY ZERO!!!!  ");
+	}
 	Complex tmp1(real, imaginary);
 	Complex tmp2(rhs.real, -rhs.imaginary);
 	tmp1 *= tmp2;
@@ -131,9 +212,9 @@ Complex operator+(const Complex& lhs, const Complex& rhs) {
 	Complex res(lhs.real + rhs.real, lhs.imaginary + rhs.imaginary);
 	return res;
 }
-Complex operator+(const Complex& lhs, const double rhs) { 
-	Complex a(rhs); 
-	return (lhs + a); 
+Complex operator+(const Complex& lhs, const double rhs) {
+	Complex a(rhs);
+	return (lhs + a);
 }
 
 Complex operator-(const Complex& lhs, const Complex& rhs) {
@@ -160,6 +241,8 @@ Complex operator/(const Complex& lhs, const Complex& rhs) {
 	Complex tmp(lhs);
 	tmp /= rhs;
 	return tmp;
+
+
 }
 Complex operator/(const Complex& lhs, const double rhs) {
 	Complex a(rhs);
@@ -173,7 +256,7 @@ std::ostream& operator<<(std::ostream& out, const Complex& z) {
 	std::cout.setf(std::ios::fixed, std::ios::floatfield);
 	std::cout.precision(3);
 
-	std::cout << "{" << z.real << ";" << z.imaginary << "}" << std::endl;
+	std::cout << "{" << z.real << ";" << z.imaginary << "}";
 
 	std::cout.flags(oldflags);
 	std::cout.precision(oldprecision);
@@ -197,27 +280,28 @@ std::istream& operator>>(std::istream& in, Complex& z) {
 	else {
 		z.real = 0;
 		z.imaginary = 0;
+		std::cout << "Format is incorrect" << std::endl;
 	}
 
 	return in;
 }
 
 
-bool operator==(const Complex& lhs, const Complex& rhs) { 
-	return (lhs.real == rhs.real && lhs.imaginary == rhs.imaginary); 
+bool operator==(const Complex& lhs, const Complex& rhs) {
+	return (lhs.real == rhs.real && lhs.imaginary == rhs.imaginary);
 }
 
-bool operator!=(const Complex& lhs, const Complex& rhs) { 
+bool operator!=(const Complex& lhs, const Complex& rhs) {
 	return !(lhs == rhs);
 }
 
 
 
-double Complex::module() { 
-	return sqrt(real * real + imaginary * imaginary); 
+double Complex::module() {
+	return sqrt(real * real + imaginary * imaginary);
 }
-double Complex::argument() { 
-	return acos(real / module()); 
+double Complex::argument() {
+	return acos(real / module());
 }
 
 

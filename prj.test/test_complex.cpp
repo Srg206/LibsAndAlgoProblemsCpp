@@ -26,12 +26,12 @@ Complex test_Prase(const std::string& s) {
 }
 
 void test() {
-	Complex a(1, 2);
+	Complex a(1.2, 2.7);
 	Complex zero(0, 0);
-	Complex b(2, 3);
-	Complex c(4, 5);
+	Complex b(2.33, 3.16);
+	Complex c(4.2, 5.11);
 	double d = 2;
-	Complex e(1, 2);
+	Complex e(1.33, 2.44);
 
 	//======================Without assigment operations START///
 	std::cout << "Without assigment operations START" << std::endl;
@@ -106,6 +106,10 @@ void test() {
 
 	//======================Comparison operations START///
 	std::cout << "Comparison operations START\n" << std::endl;
+	a += 0.33355555555555555;
+	a -= 0.33355555555555555;
+	e += 0.33355555555555555;
+	e -= 0.33355555555555555;
 
 	std::cout << "a " << a << " == " << " b" << b << " - " << BoolToStr(a == b) << std::endl;
 	std::cout << "a " << a << " == " << " b" << e << " - " << BoolToStr(a == e) << std::endl;

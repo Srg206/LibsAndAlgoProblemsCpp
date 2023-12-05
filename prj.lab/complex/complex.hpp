@@ -2,6 +2,10 @@
 #ifndef COMPLEX_COMPLEX_HPP_20231113
 #define COMPLEX_COMPLEX_HPP_20231113
 #include<iostream>
+#include<cmath>
+#include <sstream>
+#include <string>
+#include <limits>
 
 struct Complex {
 
@@ -11,7 +15,7 @@ struct Complex {
 	~Complex() = default;
 
 	double real{ 0 };
-	double imaginary{ 0.0 };
+	double imaginary{ 0.0 }; 
 
 	static const char Start_Symbol = '{';
 	static const char Middle_Division = ',';

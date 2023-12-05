@@ -1,8 +1,5 @@
-#include<iostream>
-#include<cmath>
-#include <sstream>
-#include <string>
-#include <complex/complex.hpp>
+
+#include "complex/complex.hpp"
 
 Complex::Complex(double re, double img) {
 	real = re;
@@ -151,7 +148,7 @@ std::istream& operator>>(std::istream& in, Complex& z) {
 
 
 bool operator==(const Complex& lhs, const Complex& rhs) {
-	return (lhs.real == rhs.real && lhs.imaginary == rhs.imaginary);
+	return (abs(lhs.real - rhs.real)<std::numeric_limits<double>::epsilon() && abs(lhs.imaginary - rhs.imaginary)<std::numeric_limits<double>::epsilon());
 }
 
 bool operator!=(const Complex& lhs, const Complex& rhs) {

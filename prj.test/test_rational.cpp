@@ -39,13 +39,14 @@ TEST_CASE("rational ctor") {
 }
 
 TEST_CASE("rational gcd") {
-  //Rational r(15, 6);
-  //CHECK(5 == r.get_num());
-  //CHECK(2 == r.get_den());
 
-  //Rational r_minus(-15, 6);
-  //CHECK(-5 == r_minus.get_num());
-  //CHECK(2 == r_minus.get_den());
+  Rational r(15, 6);
+  CHECK(5 == r.get_num());
+  CHECK(2 == r.get_den());
+
+  Rational r_minus(-15, 6);
+  CHECK(-5 == r_minus.get_num());
+  CHECK(2 == r_minus.get_den());
 }
 
 TEST_CASE("arithmetics") {

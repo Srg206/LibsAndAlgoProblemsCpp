@@ -20,14 +20,18 @@ void Rational::set_den(int64_t d) {
 		num *= -1;
 		d *= -1;
 	}
+	shorten_the_fraction();
 	den = d;
 }
 
 void Rational::set_num(int64_t n) {
 	num = n;
+	shorten_the_fraction();
 }
 
 int64_t greatest_common_divisor(int64_t a, int64_t b) {
+	a = abs(a);
+	b = abs(b);
 	if (a % b == 0)
 		return b;
 	if (b % a == 0)
@@ -41,7 +45,7 @@ int64_t least_common_multiple(int64_t a, int64_t b) {
 	return (a * b) / greatest_common_divisor(a, b);
 }
 void Rational::shorten_the_fraction() {
-	int64_t tmp_div = abs(greatest_common_divisor(num, den));
+	int64_t tmp_div = greatest_common_divisor(num, den);
 	num /= tmp_div;
 	den /= tmp_div;
 
@@ -52,12 +56,15 @@ Rational::Rational(int64_t n, int64_t d) {
 	}
 	num = n;
 	den = d;
+	shorten_the_fraction();
+
 }
 
 Rational& Rational::operator+=(const Rational& rhs) {
 	int64_t tmp_den= least_common_multiple(den, rhs.get_den());
 	num = num*(tmp_den/den) + rhs.get_num()*(tmp_den/rhs.get_den());
 	den = tmp_den;
+	shorten_the_fraction();
 	return *this;
 }
 
@@ -66,6 +73,7 @@ Rational& Rational::operator-=(const Rational& rhs) {
 	int64_t tmp_den= least_common_multiple(den, rhs.get_den());
 	num = num*(tmp_den/den) - rhs.get_num()*(tmp_den/rhs.get_den());
 	den = tmp_den;
+	shorten_the_fraction();
 	return *this;
 }
 
@@ -73,6 +81,7 @@ Rational& Rational::operator-=(const Rational& rhs) {
 Rational& Rational::operator*=(const Rational& rhs) {
 	num = num * rhs.get_num();
 	den = den * rhs.get_den();
+	shorten_the_fraction();
 	return *this;
 }
 
@@ -83,6 +92,7 @@ Rational& Rational::operator/=(const Rational& rhs) {
 	}
 	num = num * rhs.get_den();
 	den = den * rhs.get_num();
+	shorten_the_fraction();
 	return *this;
 }
 
@@ -95,6 +105,7 @@ std::istream& operator>>(std::istream& in, Rational& r) {
 	if (bar == r.div) {
 		r.set_num(n);
 		r.set_den(d);
+		r.shorten_the_fraction();
 	}
 	else{
 		std::cout<< "Format is incorrect" << std::endl;

@@ -1,10 +1,6 @@
 #include<iostream>
-#include<vector>
-#include<array>
 #include<cmath>
 #include<string>
-#include<algorithm>
-#include<limits.h>
 
 int max(int a, int b) {
 	return (a > b) ? a : b;

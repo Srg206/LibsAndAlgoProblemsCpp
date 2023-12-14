@@ -1,7 +1,4 @@
 #include<iostream>
-#include <list>
-#include <vector>
-#include <string>
 int main()
 {
 	int k = 0;

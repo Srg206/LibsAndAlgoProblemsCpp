@@ -1,9 +1,6 @@
 #include<iostream>
 #include<vector>
-#include<array>
-#include<cmath>
 #include<string>
-#include<algorithm>
 
 void Amount_of_signs(std::string s, int& nuls, int& ones, int& quests) {
 	for (int i = 0; i < s.size(); i++) {

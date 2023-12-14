@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 int main()
 {
     int matrix[5][5];

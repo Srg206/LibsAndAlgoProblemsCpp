@@ -1,7 +1,5 @@
 #include<iostream>
 #include <vector>
-#include <array>
-#include <algorithm>
 int main()
 {
 	int amount_of_data = 0;

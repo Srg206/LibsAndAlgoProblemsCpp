@@ -1,8 +1,8 @@
 #include "../prj.lab/rational/rational.hpp"
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include <iostream>
 #include <sstream>
+#include <iostream>
 
 
 void testing() {
@@ -34,7 +34,10 @@ TEST_CASE("rational ctor") {
   Rational r_minus_int(-3);
   CHECK(-3 == r_minus_int.get_num());
   CHECK(1 == r_minus_int.get_den());
+  Rational r1(2, 3);
+  r1 +=Rational(6, 8);// 17/12
 
+  CHECK(r1==Rational(34,24));
   CHECK_THROWS(Rational(1, 0));
 }
 
@@ -54,11 +57,15 @@ TEST_CASE("arithmetics") {
   Rational r12(1, 2);
   Rational r76(7, 6);
   Rational r16(1, 6);
+  Rational r0(0, 1);
+
   CHECK(r76 == r23 + r12);
   CHECK(r16 == r76 - 1);
   CHECK(r76 == r16 * 7);
   CHECK(r76 == 7 * r16);
   CHECK(r16 == r76 / 7);
+  CHECK_THROWS(r16/r0);
+
 };
 
 TEST_CASE("IO") {

@@ -24,7 +24,7 @@ void Rational::set_den(int64_t d) {
 	den = d;
 }
 
-void Rational::set_num(int64_t n) {
+void Rational::set_num(const int64_t n) {
 	num = n;
 	shorten_the_fraction();
 }
@@ -50,7 +50,7 @@ void Rational::shorten_the_fraction() {
 	den /= tmp_div;
 
 }
-Rational::Rational(int64_t n, int64_t d) {
+Rational::Rational(const int64_t n, const int64_t d) {
 	if (d == 0) {
 		throw  std::exception("   ERORR: DENOMINATOR CAN`T BE EQUAL ZERO !!!!  ");
 	}
@@ -115,14 +115,11 @@ std::istream& operator>>(std::istream& in, Rational& r) {
 }
 
 
-std::ostream& operator<<(std::ostream& out,  Rational& r) {
-	r.shorten_the_fraction();
+std::ostream& operator<<(std::ostream& out, const Rational& r) {
 	out << r.get_num() << r.div << r.get_den();
 	return out;
 }
-bool operator==( Rational& a, Rational& b) {
-	a.shorten_the_fraction();
-	b.shorten_the_fraction();
+bool operator==(const Rational& a, const Rational& b) {
 	if (a.get_den() == b.get_den() && a.get_num() == b.get_num()) {
 		return true;
 	}
@@ -130,15 +127,13 @@ bool operator==( Rational& a, Rational& b) {
 		return false;
 	}
 }
-bool operator!=( Rational& a, Rational& b) {
+bool operator!=( const Rational& a, const Rational& b) {
 	return !(a == b);
 }
-bool operator<( Rational& a, Rational& b) {
+bool operator<(const Rational& a, const Rational& b) {
 	int64_t tmp_den = least_common_multiple(a.get_den(),b.get_den());
-	a.set_num((tmp_den / a.get_den()) * a.get_num());
-	b.set_num((tmp_den / b.get_den()) * b.get_num());
-	a.set_den(tmp_den);
-	b.set_den(tmp_den);
+	int64_t a_num((tmp_den / a.get_den()) * a.get_num());
+	int64_t b_num((tmp_den / b.get_den()) * b.get_num());
 
 	if (a.get_num() < b.get_num()) {
 		return true;
@@ -147,14 +142,12 @@ bool operator<( Rational& a, Rational& b) {
 		return false;
 	}
 }
-bool operator>( Rational& a, Rational& b) {
+bool operator<=( const Rational& a,const Rational& b) {
 	int64_t tmp_den = least_common_multiple(a.get_den(),b.get_den());
-	a.set_num((tmp_den / a.get_den()) * a.get_num());
-	b.set_num((tmp_den / b.get_den()) * b.get_num());
-	a.set_den(tmp_den);
-	b.set_den(tmp_den);
+	int64_t a_num((tmp_den / a.get_den()) * a.get_num());
+	int64_t b_num((tmp_den / b.get_den()) * b.get_num());
 
-	if (a.get_num() < b.get_num()) {
+	if (a.get_num() <= b.get_num()) {
 		return true;
 	}
 	else {
@@ -162,50 +155,72 @@ bool operator>( Rational& a, Rational& b) {
 	}
 }
 
-Rational operator+(Rational& a, Rational& b) {
-	Rational c(a);
-	c += b;
-	return c;
+
+bool operator>(const Rational& a, const Rational& b) {
+	int64_t tmp_den = least_common_multiple(a.get_den(),b.get_den());
+	int64_t a_num((tmp_den / a.get_den()) * a.get_num());
+	int64_t b_num((tmp_den / b.get_den()) * b.get_num());
+
+	if (a.get_num() > b.get_num()) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
-Rational operator-(Rational& a, Rational& b) {
-	Rational c(a);
-	c -= b;
-	return c;
-}
-Rational operator*(Rational& a, Rational& b) {
-	Rational c(a);
-	c *= b;
-	return c;
-}
-Rational operator/(Rational& a, Rational& b) {
-	Rational c(a);
-	c /= b;
-	return c;
+bool operator>=( const Rational& a,const Rational& b) {
+	int64_t tmp_den = least_common_multiple(a.get_den(),b.get_den());
+	int64_t a_num((tmp_den / a.get_den()) * a.get_num());
+	int64_t b_num((tmp_den / b.get_den()) * b.get_num());
+
+	if (a.get_num() >= b.get_num()) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 
 
-Rational operator+(Rational& a,int64_t b) {
+
+
+Rational operator+(const Rational& a, const  Rational& b) {
+	return Rational(a) += b;
+}
+Rational operator-(const Rational& a, const Rational& b) {
+	return Rational(a) += b;
+}
+Rational operator*(const Rational& a, const Rational& b) {
+	return Rational(a) += b;
+}
+Rational operator/(const Rational& a, const Rational& b) {
+	return Rational(a) += b;
+}
+
+
+
+Rational operator+(const Rational& a, const int64_t b) {
 	Rational c(a);
 	Rational d(b);
 	c += d;
 	return c;
 }
-Rational operator-(Rational& a, int64_t b) {
+Rational operator-(const Rational& a, const int64_t b) {
 	Rational c(a);
 	Rational d(b);
 
 	c -= d;
 	return c;
 }
-Rational operator*(Rational& a, int64_t b) {
+Rational operator*(const Rational& a, const int64_t b) {
 	Rational c(a);
 	Rational d(b);
 
 	c *= d;
 	return c;
 }
-Rational operator/(Rational& a, int64_t b) {
+Rational operator/(const Rational& a, const int64_t b) {
 	Rational c(a);
 	Rational d(b);
 
@@ -215,27 +230,27 @@ Rational operator/(Rational& a, int64_t b) {
 
 
 
-Rational operator+(int64_t b ,Rational &a) {
+Rational operator+(const int64_t b , const Rational &a) {
 	Rational c(a);
 	Rational d(b);
 	c += d;
 	return c;
 }
-Rational operator-(int64_t b, Rational& a) {
+Rational operator-(const int64_t b, const Rational& a) {
 	Rational c(a);
 	Rational d(b);
 
 	c -= d;
 	return c;
 }
-Rational operator*(int64_t b, Rational& a) {
+Rational operator*(const int64_t b, const  Rational& a) {
 	Rational c(a);
 	Rational d(b);
 
 	c *= d;
 	return c;
 }
-Rational operator/(int64_t b, Rational& a) {
+Rational operator/(const int64_t b, const Rational& a) {
 	Rational c(a);
 	Rational d(b);
 

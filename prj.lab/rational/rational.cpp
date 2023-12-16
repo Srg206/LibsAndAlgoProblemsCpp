@@ -189,13 +189,13 @@ Rational operator+(const Rational& a, const  Rational& b) {
 	return Rational(a) += b;
 }
 Rational operator-(const Rational& a, const Rational& b) {
-	return Rational(a) += b;
+	return Rational(a) -= b;
 }
 Rational operator*(const Rational& a, const Rational& b) {
-	return Rational(a) += b;
+	return Rational(a) *= b;
 }
 Rational operator/(const Rational& a, const Rational& b) {
-	return Rational(a) += b;
+	return Rational(a) /= b;
 }
 
 

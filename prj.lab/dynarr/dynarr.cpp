@@ -14,14 +14,14 @@ DynArr::DynArr(size_t s) {
 	size_ = s;
 	capacity_ = s;
 	data_ = new float[s];
-	for (size_t i = 0; i < s; i++){
+	for (size_t i = 0; i < s; i++) {
 		data_[i] = 0;
 	}
 }
 
 DynArr::~DynArr() {
 	delete[] data_;
-	data_=nullptr;
+	data_ = nullptr;
 }
 
 DynArr& DynArr::operator=(const DynArr& arr) {
@@ -46,7 +46,7 @@ size_t DynArr::capacity() {
 
 void DynArr::Resize(size_t s) {
 	if (s < size_) {
-		for (size_t i = s; i < size_; i++){
+		for (size_t i = s; i < size_; i++) {
 			data_[i] = 0;
 		}
 		size_ = s;
@@ -71,7 +71,8 @@ void DynArr::Resize(size_t s) {
 				data_[i] = 0;
 			}
 		}
-
+		delete[] tmp;
+		tmp = nullptr;
 		size_ = s;
 		capacity_ = s;
 	}
@@ -95,12 +96,12 @@ float& DynArr::operator[](size_t idx) {
 	}
 }
 
-bool operator==(DynArr& a,DynArr& b) {
+bool operator==(DynArr& a, DynArr& b) {
 	bool flag = true;
 	if (a.size() != b.size() || a.capacity() != b.capacity()) {
 		flag = false;
 	}
-	for (size_t i = 0; i < a.size(); i++){
+	for (size_t i = 0; i < a.size(); i++) {
 		if (a[i] != b[i]) {
 			flag = false;
 		}

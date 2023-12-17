@@ -36,6 +36,8 @@ TEST_CASE("Resize") {
 	for (size_t i = 0; i < 10; i++) {
 		a[i] = i;
 	}
+
+
 	a.Resize(15);
 	CHECK((a.capacity() == 15 && a.size() == 15));
 	for (size_t i = 10; i < 15; i++) {

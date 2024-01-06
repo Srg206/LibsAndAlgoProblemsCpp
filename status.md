@@ -1,4 +1,6 @@
-CHECK: 20231217-151245
+CHECK: 20231231-093411
+OK: CMake generator successed
+OK: CMake build (MSVC x64) successed
 ERROR: lab complex - test build failed
 STATUS: lab complex_io - test-failed
 ERROR: lab rational - test build failed

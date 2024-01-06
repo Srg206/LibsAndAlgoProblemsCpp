@@ -75,9 +75,14 @@ TEST_CASE("IO") {
 
   istream >> reading;
   CHECK(reading == r23);
-  istream.str("-3|3");
-  istream >> reading;
-  CHECK(istream.failbit == std::ios_base::failbit);
+
+  std::istringstream istream2("-3|3"); //?
+  CHECK_THROWS(istream2 >> reading);
+
+  r23.set_den(-3);
+  r23.set_den(-2);
+  std::cout << r23;
+
 
   std::ostringstream ostream;
   ostream<< Rational(2, 3);

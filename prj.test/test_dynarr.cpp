@@ -10,7 +10,7 @@ TEST_CASE("dynarr ctor") {
 	DynArr arr_s(size);
 	CHECK_EQ(arr_s[0], 0);
 	CHECK_EQ(arr_s.size(), size);
-	CHECK_THROWS(void(DynArr(-size)));
+	CHECK_THROWS(DynArr(-size));
 }
 
 TEST_CASE("dynarr op") {

@@ -108,7 +108,7 @@ std::istream& operator>>(std::istream& in, Rational& r) {
 		r.shorten_the_fraction();
 	}
 	else{
-		std::cout<< "Format is incorrect" << std::endl;
+		throw(std::exception("Format is incorrect"));
 	}
 	return in;
 

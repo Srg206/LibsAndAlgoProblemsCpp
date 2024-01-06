@@ -25,7 +25,7 @@ public:
 	void shorten_the_fraction();
 private:
 	int64_t num = 0; //сверху
-	int64_t den = 1; //снизу
+	int64_t den = 1; //снизу 
 
 };
 

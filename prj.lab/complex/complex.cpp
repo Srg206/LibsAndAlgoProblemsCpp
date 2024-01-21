@@ -111,15 +111,15 @@ Complex operator/(const Complex& lhs, const double rhs) {
 
 
 std::ostream& operator<<(std::ostream& out, const Complex& z) {
-	std::ios_base::fmtflags oldflags = std::cout.flags();
-	std::streamsize oldprecision = std::cout.precision();
-	std::cout.setf(std::ios::fixed, std::ios::floatfield);
-	std::cout.precision(3);
+	//std::ios_base::fmtflags oldflags = std::cout.flags();
+	//std::streamsize oldprecision = std::cout.precision();
+	//std::cout.setf(std::ios::fixed, std::ios::floatfield);
+	//std::cout.precision(3);
 
-	std::cout << "{" << z.real << "," << z.imaginary << "}";
+	out << "{" << z.real << "," << z.imaginary << "}";
 
-	std::cout.flags(oldflags);
-	std::cout.precision(oldprecision);
+	//std::cout.flags(oldflags);
+	//std::cout.precision(oldprecision);
 
 
 	return out;
@@ -133,14 +133,15 @@ std::istream& operator>>(std::istream& in, Complex& z) {
 	double re = 0;
 	double im = 0;
 	in >> left_bar >> re >> semicolon >> im >> right_bar;
-	if (left_bar == z.Start_Symbol && semicolon == z.Middle_Division && right_bar == z.Finish_Symbol) {
+	if (left_bar == z.Start_Symbol && semicolon == z.Middle_Division && right_bar == z.Finish_Symbol && in.good()) {
 		z.real = re;
 		z.imaginary = im;
 	}
 	else {
 		z.real = 0;
 		z.imaginary = 0;
-		std::cout << "Format is incorrect" << std::endl;
+		in.setstate(std::ios_base::failbit);
+		//	std::cout << "Format is incorrect" << std::endl;
 	}
 
 	return in;
